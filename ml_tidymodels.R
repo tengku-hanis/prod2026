@@ -7,7 +7,7 @@
 # Packages ---------------------------------------------------------------
 
 # Install
-install.packages(c("tidymodels", "tidyverse", "medicaldata", "skimr", "vip"))
+install.packages(c("tidymodels", "tidyverse", "mlbench", "medicaldata", "skimr", "vip", "glmnet"))
 
 # Load
 library(tidymodels)
