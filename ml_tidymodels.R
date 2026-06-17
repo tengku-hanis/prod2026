@@ -35,7 +35,10 @@ data_pima <-
   PimaIndiansDiabetes %>% 
   group_by(diabetes) %>% 
   slice_sample(n = 268) %>% 
-  ungroup()
+  ungroup() %>% 
+  # Set positive as our main prediction
+  mutate(diabetes = relevel(diabetes, ref = "pos"))
+  
 
 # A reduced but balanced data
 skimr::skim(data_pima)
@@ -100,7 +103,7 @@ tuned_res <-
 # Evaluate tuning result -------------------------------------------------
 
 # General results
-autoplot(tuned_res) + theme_light()
+autoplot(tuned_res) + theme_bw()
 tuned_res %>% collect_metrics() 
 
 # Result for specific metric
@@ -159,11 +162,12 @@ pima_pred %>%
 
 ## Plot ROC
 pima_pred %>% 
-  roc_curve(diabetes, .pred_neg) %>% 
+  roc_curve(diabetes, .pred_pos) %>% 
   autoplot()
 
+## ROC-AUC
 pima_pred %>% 
-  roc_auc(diabetes, .pred_neg)
+  roc_auc(diabetes, .pred_pos)
 
 # 3) Confusion matrix
 conf_mat(pima_pred, truth = diabetes, estimate = .pred_class) %>% 
