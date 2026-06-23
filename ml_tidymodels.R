@@ -142,6 +142,18 @@ logr_raw_model <-
 vip::vip(logr_raw_model)
 
 
+# Predict a new data -----------------------------------------------------
+
+# New data
+data_test[2, -9] 
+
+# Predict class
+predict(logr_trained, new_data = data_test[2, -9])
+
+# Predict probability
+predict(logr_trained, new_data = data_test[2, -9], type = "prob")
+
+
 # Assess on testing data --------------------------------------------------
 
 # Predict on the new data
